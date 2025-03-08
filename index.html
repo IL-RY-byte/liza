@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Dancing+Script:wght@400;700&display=swap');
+    
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .container {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5em;
+      font-weight: 700;
+      color: #111;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: textAppear 0.8s forwards;
+      animation-delay: 3s;
+    }
+    
+    .date {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8em;
+      color: #ff3366;
+      font-weight: 600;
+      margin-top: 10px;
+      opacity: 0;
+      animation: textAppear 0.8s forwards;
+      animation-delay: 3.3s;
+    }
+    
+    .name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5em;
+      color: #111;
+      margin-top: 15px;
+      opacity: 0;
+      animation: textAppear 0.8s forwards;
+      animation-delay: 3.6s;
+    }
+    
+    .flower-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+    }
+    
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff3366;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
+      opacity: 0;
+    }
+    
+    .ink-splatter {
+      position: absolute;
+      opacity: 0;
+      animation: splatterAppear 0.5s forwards;
+      animation-delay: 2.8s;
+    }
+    
+    @keyframes petalAppear {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      100% { transform: scale(1) rotate(360deg); opacity: 1; }
+    }
+    
+    @keyframes petalDisappear {
+      0% { transform: scale(1) rotate(360deg); opacity: 1; }
+      100% { transform: scale(3) rotate(720deg); opacity: 0; }
+    }
+    
+    @keyframes textAppear {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes splatterAppear {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 0.15; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flower-container" id="flowerContainer"></div>
+    <svg class="ink-splatter" width="400" height="300" viewBox="0 0 400 300" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -70%);">
+      <path d="M200,150 C230,120 260,140 270,110 C280,80 310,60 290,30 C270,0 230,20 200,10 C170,0 140,30 120,10 C100,-10 60,0 50,30 C40,60 70,80 80,110 C90,140 120,120 150,130 C180,140 170,180 200,150 Z" fill="#000" opacity="0.6"></path>
+    </svg>
+    <h1 class="text">8.03</h1>
+    <div class="date">Happy Women's Day</div>
+    <div class="name">Yelizaveta</div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('flowerContainer');
+      const petalCount = 12;
+      const radius = 80;
+      
+      // Create and animate petals in sequence
+      for (let i = 0; i < petalCount; i++) {
+        setTimeout(() => {
+          const petal = document.createElement('div');
+          petal.className = 'petal';
+          
+          // Position in circle
+          const angle = (i / petalCount) * Math.PI * 2;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+          
+          petal.style.transform = `translate(${x}px, ${y}px)`;
+          
+          // Animation
+          petal.style.animation = `petalAppear 0.5s forwards, petalDisappear 0.7s forwards`;
+          petal.style.animationDelay = `${0.1 * i}s, ${2.2 + 0.05 * i}s`;
+          
+          container.appendChild(petal);
+        }, i * 100);
+      }
+    });
+  </script>
+</body>
+</html>
